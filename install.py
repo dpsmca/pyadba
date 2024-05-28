@@ -16,7 +16,7 @@ def dedent_multiline_string(multiline_string):
     return fixed_content
 
 
-def create_and_activate_venv():
+def create_venv():
     venv_dir = os.path.join(os.path.dirname(__file__), 'venv')
     if not os.path.exists(venv_dir):
         # Create virtual environment
@@ -31,7 +31,6 @@ def generate_wrapper_scripts(venv_dir):
     args = '"${@}"'  # Pass all arguments
 
     if platform.system() == 'Windows':
-        # cmd_content = f"@echo off\n\"{venv_dir}\\Scripts\\activate.bat\"\npython \"{script_path}\" %*\n"
         cmd_content = f"""@echo off
         if not exists "{venv_dir}" goto :venv_err
         "{venv_dir}\\Scripts\\activate.bat"
@@ -43,12 +42,13 @@ def generate_wrapper_scripts(venv_dir):
         echo Please run the install script to create the virtual environment before running this script:
         echo python install.py
         exit /b 1
+
+        :end
         """
         trimmed_content = dedent_multiline_string(cmd_content)
         with open('pyadba.cmd', 'w') as f:
             f.write(trimmed_content)
     else:
-        # sh_content = f"#!/bin/bash\nsource \"{venv_dir}/bin/activate\"\npython \"{script_path}\" {args}\n"
         sh_content = f"""#!/usr/bin/env bash
 
         if [[ ! -d "{venv_dir}" ]]; then
@@ -87,7 +87,7 @@ def install_packages():
 
 
 if __name__ == '__main__':
-    create_and_activate_venv()
+    create_venv()
     install_packages()
 
 
