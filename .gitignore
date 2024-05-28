@@ -1,5 +1,16 @@
+# Python stuff
 venv
 __pycache__
+
+# IDE stuff
 .idea
 .vscode
 .history
+
+# Wrapper scripts
+/pyadba.sh
+/pyadba.cmd
+/pyadba.bat
+
+# OS stuff
+.DS_Store
