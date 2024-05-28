@@ -83,7 +83,22 @@ def generate_wrapper_scripts(venv_dir):
 
 
 def install_packages():
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
+    venv_dir = os.path.join(os.path.dirname(__file__), 'venv')
+    if platform.system() == 'Windows':
+        activate_script = os.path.join(venv_dir, 'Scripts', 'activate.bat')
+    else:
+        activate_script = os.path.join(venv_dir, 'bin', 'activate')
+    if os.path.exists(activate_script):
+        if platform.system() == 'Windows':
+            subprocess.check_call([activate_script])
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
+        else:
+            cmd = f"source {activate_script} && pip install -r requirements.txt".encode()
+            print("Attempting to install required packages ...")
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            if result.stdout:
+                print("Results:")
+                print(result.stdout)
 
 
 if __name__ == '__main__':
@@ -91,26 +106,3 @@ if __name__ == '__main__':
     install_packages()
 
 
-# def create_and_activate_venv():
-#     venv_dir = os.path.join(os.path.dirname(__file__), 'venv')
-#     if not os.path.exists(venv_dir):
-#         # Create virtual environment
-#         subprocess.check_call([sys.executable, '-m', 'venv', 'venv'])
-#
-#     # Activate the virtual environment
-#     if platform.system() == 'Windows':
-#         activate_script = os.path.join(venv_dir, 'Scripts', 'activate.bat')
-#     else:
-#         activate_script = os.path.join(venv_dir, 'bin', 'activate')
-#         # This part only works if you're using this script from a shell that supports source command
-#         print(f"Please activate the virtual environment by running:\nsource {activate_script}")
-#         sys.exit(0)
-#
-#
-# def install_packages():
-#     subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', 'requirements.txt'])
-#
-#
-# if __name__ == '__main__':
-#     create_and_activate_venv()
-#     install_packages()
