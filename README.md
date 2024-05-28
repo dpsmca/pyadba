@@ -1,4 +1,5 @@
 # pyadba
+
 This Python module allows a daring individual to access and query a SQL Server database.
 
 It may work with Active Directory domain / NTLMv2 authentication when `pyodbc` and `pymssql` and even `sqlcmd` just **WILL**. **NOT**. **AUTHENTICATE**.
@@ -6,16 +7,20 @@ It may work with Active Directory domain / NTLMv2 authentication when `pyodbc` a
 It is intended to be useful for DBAs to perform repeated tasks that would be handy to build some sort of automatic SQL script generator for. Or to grab some data for a shell script, perhaps. Or, say, to run a periodic SQL task via cron. Or just to kick back on a Friday night and get wild and crazy with some joins and cursors.
 
 ## Installation
+
 Clone the repository and run the install script:
+
 ```
 python install.py
 ```
+
 This will:
 - Create a virtual environment in the `venv` folder
 - Install the required dependencies in the virtual environment
 - Create a wrapper script to make the program easy to run (Bash or Windows)
 
 ## System Requirements
+
 This puppy shoud work on any modern desktop operating system (Linux, Windows, Mac OS) with Python 3.6 (or higher) installed.
 - **macOS**
   - Tested on macOS Monterey 12.7.4 and Ventura 13.6.6
@@ -33,51 +38,47 @@ This puppy shoud work on any modern desktop operating system (Linux, Windows, Ma
 Further documentation will come later. In the meantime, here's some auto-generated info.
 
 ### Command Usage
-<blockquote>
-<div style="font-family:'Courier','Courier New',monospace;">
-<span style="color:rgba(255,255,192,0.9);">pyadba.py</span>
-<span style="color: rgba(192, 192, 255, 0.5);">[<span style="color: rgba(192, 192, 255, 0.95);">-s</span>
-<span style="color: rgba(192, 128, 255, 0.9);">ARG_SERVER</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-D</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_DATABASE</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-S</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_SCHEMA</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-i</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_INPUT</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-o</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_OUTPUT_SEPARATOR</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-q</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_QUOTE_OUTPUT</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-H</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-U</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_USERNAME</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-P</span> <span style="color: rgba(192, 128, 255, 0.9);">ARG_PASSWORD</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-d</span>] [<span style="color: rgba(192, 192, 255, 0.95);">-v</span>]
-[<span style="color: rgba(192, 192, 255, 0.95);">-x</span>] [<span style="color: rgba(192, 192, 255, 0.95);">-h</span>]</span>
-</div>
-</blockquote>
 
+```bash
+python pyadba.py [-s ARG_SERVER] [-D ARG_DATABASE] [-S ARG_SCHEMA] [-i ARG_INPUT] [-o ARG_OUTPUT_SEPARATOR] [-q ARG_QUOTE_OUTPUT] [-H] [-U ARG_USERNAME] [-P ARG_PASSWORD] [-d] [-v] [-x] [-h]
+```
 
 ### Help Text
 
-<blockquote style="font-family:'Courier','Courier New',monospace;">
-<div style="white-space:pre-wrap;font-size:13px;">
-<span style="color:lightgreen;font-size:24px;font-weight:bold;">pyadba</span>: <span style="color:lightgreen;font-size:16px;">run a sql server query from the command line</span></span><br>
-<span style="color:cyan;text-decoration: underline;">Querying parameters:</span>
-  <span style="color:plum;">(-s|--server)</span> <span style="color:lawngreen;">{server}</span>                   <span style="color:deepskyblue;"># Server to connect to</span>
-  <span style="color:plum;">(-D|--database)</span> <span style="color:lawngreen;">{database}</span>               <span style="color:deepskyblue;"># Database name</span>
-  <span style="color:plum;">(-S|--schema)</span> <span style="color:lawngreen;">{schema}</span>                   <span style="color:deepskyblue;"># Schema to use (default: dbo)</span>
-  <span style="color:plum;">(-i|--input)</span> <span style="color:lawngreen;">{input_file}</span>                <span style="color:deepskyblue;"># SQL input file containing query to run</span>
-  <span style="color:plum;">(-o|--output-separator)</span> <span style="color:lawngreen;">{separator}</span>      <span style="color:deepskyblue;"># Separate output columns with this (default: tab)</span>
-  <span style="color:plum;">(-q|--quote-output)</span> <span style="color:lawngreen;">{quote_rule}</span>         <span style="color:deepskyblue;"># When to quote the output columns:</span><br>                                              <span style="color:deepskyblue;">(auto|always|never) (default: auto)</span>
-  <span style="color: plum;">(-H|--hide-header)</span>                       <span style="color:deepskyblue;"># Hide column names of results</span><br>
-<span style="color:cyan;text-decoration: underline;">Authentication parameters:</span>
-  <span style="color: plum;">(-U|--username)</span> <span style="color:lawngreen;">{username}</span>               <span style="color:deepskyblue;"># Username for server and database</span>
-  <span style="color: plum;">(-P|--password)</span> <span style="color:lawngreen;">{password}</span>               <span style="color:deepskyblue;"># Password for server and database</span><br>
-<span style="color:cyan;text-decoration: underline;">Testing, debugging, misc. parameters:</span>
-  <span style="color: plum;">(-d|--debug)</span>                             <span style="color:deepskyblue;"># Show debug information and intermediate steps</span>
-  <span style="color: plum;">(-v|--version)</span>                           <span style="color:deepskyblue;"># Show program's version number and exit</span>
-  <span style="color: plum;">(-x|--examples)</span>                          <span style="color:deepskyblue;"># Show examples of usage</span>
-  <span style="color: plum;">(-h|--help)</span>                              <span style="color:deepskyblue;"># Show this help message and exit</span><br>
-<span style="color:cyan;text-decoration: underline;">Examples:</span>
-  <span style="color:forestgreen;"># Query the default server, database, and schema using the query in dbquery.sql</span>
-  <span style="color:deepskyblue;">pyadba.py -i dbquery.sql</span><br>
-  <span style="color:forestgreen;"># Query using commas to separate the output columns</span>
-  <span style="color:deepskyblue;">pyadba.py -i dbquery.sql -o ","</span>
-</span>
-</div>
-</blockquote>
+```bash
+Run a SQL query from the command line
+
+Querying parameters:
+  -s ARG_SERVER, --server ARG_SERVER
+                        Server to connect to
+  -D ARG_DATABASE, --database ARG_DATABASE
+                        Database name
+  -S ARG_SCHEMA, --schema ARG_SCHEMA
+                        Schema to use (default: dbo)
+  -i ARG_INPUT, --input ARG_INPUT
+                        SQL input file containing query to run
+  -o ARG_OUTPUT_SEPARATOR, --output-separator ARG_OUTPUT_SEPARATOR
+                        Separate output columns with this (default: tab)
+  -q ARG_QUOTE_OUTPUT, --quote-output ARG_QUOTE_OUTPUT
+                        When to quote the output columns: always, never, auto (default: auto)s
+  -H, --hide-header     Hide column names of results
+
+Authentication parameters:
+  -U ARG_USERNAME, --username ARG_USERNAME
+                        Username for server and database
+  -P ARG_PASSWORD, --password ARG_PASSWORD
+                        Password for server and database
+
+Testing, debugging, and miscellaneous parameters:
+  -d, --debug           Show debug information and intermediate steps
+  -v, --version         Show program's version number and exit
+  -x, --examples        Show examples of usage
+  -h, --help            Show this help message and exit
+
+Usage examples:
+  # Query the specified database using the query in dbquery.sql
+  pyadba.py -s ROEFDN927Q -D Adventureworks2016 -s dbo -i dbquery.sql
+
+  # Same query, but use commas to separate the output columns
+  pyadba.py -s ROEFDN927Q -D Adventureworks2016 -s dbo -i dbquery.sql -o ","
+```
