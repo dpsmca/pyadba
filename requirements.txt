@@ -1,0 +1,7 @@
+wheel
+JayDeBeApi
+termcolor
+pytz
+pyodbc
+pyodbc-database-tools
+pyodbc-helpers
