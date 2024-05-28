@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# import pyodbc
+# import pyodbc  # Not working
 import sys
 import os
 from os import path
